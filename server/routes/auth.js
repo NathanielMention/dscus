@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { pool } = require("../config/dbConfig");
 const { body, check, validationResult } = require("express-validator");
+const passport = require("passport");
 const bcrypt = require("bcrypt");
 
 router.post(
@@ -124,6 +125,11 @@ router.post(
         );
       }),
   ],
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureFlash: true,
+  }),
   (req, res) => {
     //errors from login validation
     const loginErrors = validationResult(req);
