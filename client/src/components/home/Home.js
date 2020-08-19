@@ -1,7 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class Home extends Component {
-  render() {
-    return <div>This is home page!</div>;
-  }
+export default function Home() {
+  return <div>This is home page!</div>;
 }

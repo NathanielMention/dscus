@@ -5,14 +5,16 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./home/Home";
 import Login from "./login/Login";
 import Register from "./register/Register";
+import PageNotFound from "./PageNotFound";
 
 function App() {
   return (
     <div>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route component={PageNotFound} />
       </Switch>
     </div>
   );
