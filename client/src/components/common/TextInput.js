@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const TextInput = ({ name, label, onChange, placeholder, value, error }) => {
-  let wrapperClass = "form-group";
+  let wrapperClass = "formGroup";
   if (error && error.length > 0) {
-    wrapperClass += " " + "has-error";
+    wrapperClass += " " + "hasError";
   }
 
   return (
@@ -14,12 +14,12 @@ const TextInput = ({ name, label, onChange, placeholder, value, error }) => {
         <input
           type="text"
           name={name}
-          className="form-control"
+          className="formControl"
           placeholder={placeholder}
           value={value}
           onChange={onChange}
         />
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && <div className="alert">{error}</div>}
       </div>
     </div>
   );
