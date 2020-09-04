@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import TextInput from "../common/TextInput";
 import { Link } from "react-router-dom";
 
-const Register = ({ onSubmit, onChange, submit = false, errors = {} }) => {
+//react function component to Login user
+const Login = ({ history, submit = false, errors = {} }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    history.push("/");
+  }
+
   return (
     <>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         <h2>Login</h2>
         {errors.onSubmit && (
           <div className="alerts" role="alert">
@@ -16,16 +25,18 @@ const Register = ({ onSubmit, onChange, submit = false, errors = {} }) => {
         <TextInput
           name="username"
           label="Username"
-          value={""}
-          onChange={onChange}
+          placeholder="Enter Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           error={errors.username}
         />
 
         <TextInput
           name="passwprd"
           label="Password"
-          value={""}
-          onChange={onChange}
+          placeholder="Enter Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           error={errors.password}
         />
 
@@ -38,11 +49,12 @@ const Register = ({ onSubmit, onChange, submit = false, errors = {} }) => {
   );
 };
 
-Register.propTypes = {
+Login.propTypes = {
+  username: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
   errors: PropTypes.object,
-  onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
   submit: PropTypes.bool,
+  history: PropTypes.object.isRequired,
 };
 
-export default Register;
+export default Login;

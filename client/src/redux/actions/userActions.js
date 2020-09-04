@@ -5,7 +5,7 @@ import {
   LOGOUT_USER,
 } from "./actionType";
 
-export function registerUser(userData) {
+export function registerUser() {
   const request = fetch("http://localhost:3000/register").then(
     (res) => res.data
   );
@@ -15,7 +15,7 @@ export function registerUser(userData) {
   };
 }
 
-export function loginUser(userData) {
+export function loginUser() {
   const request = fetch("http://localhost:3000/login").then((res) => res.data);
   return {
     type: LOGIN_USER,
