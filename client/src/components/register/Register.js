@@ -18,47 +18,49 @@ const Register = ({ history, submit = false, errors = {} }) => {
   return (
     <>
       <div className="baseContainer">
-        <form onSubmit={handleSubmit} autoComplete="off">
-          <h2 className="header">Sign Up</h2>
-          {errors.onSubmit && (
-            <div className="alerts" role="alert">
-              {errors.onSubmit}
-            </div>
-          )}
-          <TextInput
-            name="username"
-            label="Username"
-            placeholder="Enter Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            error={errors.username}
-          />
+        <div className="content">
+          <form className="form" onSubmit={handleSubmit} autoComplete="off">
+            <h2 className="header">Sign Up</h2>
+            {errors.onSubmit && (
+              <div className="alerts" role="alert">
+                {errors.onSubmit}
+              </div>
+            )}
+            <TextInput
+              name="username"
+              label="Username"
+              placeholder="Enter Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              error={errors.username}
+            />
 
-          <TextInput
-            name="passwprd"
-            label="Password"
-            placeholder="Enter Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            error={errors.password}
-          />
+            <TextInput
+              name="passwprd"
+              label="Password"
+              placeholder="Enter Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              error={errors.password}
+            />
 
-          <TextInput
-            name="confirmPassword"
-            label="Confirm Password"
-            placeholder="Confirm password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            error={errors.confirmPassword}
-          />
+            <TextInput
+              name="confirmPassword"
+              label="Confirm Password"
+              placeholder="Confirm password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              error={errors.confirmPassword}
+            />
 
-          <button type="submit" disabled={submit} className="btn">
-            {submit ? "submit..." : "Sign Up"}
-          </button>
-        </form>
-        <Link className="footer" to={"/login"}>
-          Already Have An Account?
-        </Link>
+            <button type="submit" disabled={submit} className="btn">
+              {submit ? "submit..." : "Sign Up"}
+            </button>
+            <Link className="footer" to={"/login"}>
+              Already Have An Account?
+            </Link>
+          </form>
+        </div>
       </div>
     </>
   );
