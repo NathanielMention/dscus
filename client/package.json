@@ -32,6 +32,7 @@
   "proxy": "http://localhost:5000",
   "dependencies": {
     "immer": "^7.0.5",
+    "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -41,7 +42,8 @@
     "redux": "^4.0.5",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "sass-loader": "^10.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",
