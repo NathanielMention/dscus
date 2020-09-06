@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import TextInput from "../common/TextInput";
+import ThemeBtn from "../common/ThemeBtn";
 import { Link } from "react-router-dom";
 import "../../../styles/Login.scss";
+import "../../../styles/ThemeBtn.scss";
 
 //react function component to Login user
 const Login = ({ history, submit = false, errors = {} }) => {
@@ -19,6 +21,7 @@ const Login = ({ history, submit = false, errors = {} }) => {
       <div className="baseContainer">
         <div className="content">
           <form className="form" onSubmit={handleSubmit} autoComplete="off">
+            <ThemeBtn />
             <h2 className="header">Login</h2>
             {errors.onSubmit && (
               <div className="alerts" role="alert">
