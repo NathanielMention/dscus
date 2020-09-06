@@ -28,5 +28,8 @@
       outline: none;
       box-shadow: 0px 0px 12px 0.8px #00af89;
     }
+    &:focus::placeholder {
+      color: transparent;
+    }
   }
 }
