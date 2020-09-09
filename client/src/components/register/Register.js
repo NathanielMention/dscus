@@ -5,6 +5,7 @@ import ThemeBtn from "../common/ThemeBtn";
 import { Link } from "react-router-dom";
 import "../../../styles/Register.scss";
 import "../../../styles/ThemeBtn.scss";
+import RegisterImg from "../../../public/icons/register.svg";
 
 //react function component to register user
 const Register = ({ history, submit = false, errors = {} }) => {
@@ -20,6 +21,7 @@ const Register = ({ history, submit = false, errors = {} }) => {
   return (
     <>
       <div className="baseContainer">
+        <RegisterImg className="registerImg" />
         <div className="content">
           <form className="form" onSubmit={handleSubmit} autoComplete="off">
             <ThemeBtn />

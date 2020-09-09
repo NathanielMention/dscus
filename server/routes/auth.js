@@ -59,6 +59,7 @@ router.post(
     }
     // Validation passed
     const { username, password, avatar } = req.body;
+    console.log(username, password);
     // Hash password and store into database
     const hashedPassword = await bcrypt.hash(password, 10);
     // Place the new user into the database

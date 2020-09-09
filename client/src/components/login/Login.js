@@ -5,6 +5,7 @@ import ThemeBtn from "../common/ThemeBtn";
 import { Link } from "react-router-dom";
 import "../../../styles/Login.scss";
 import "../../../styles/ThemeBtn.scss";
+import LoginImg from "../../../public/icons/login.svg";
 
 //react function component to Login user
 const Login = ({ history, submit = false, errors = {} }) => {
@@ -19,6 +20,7 @@ const Login = ({ history, submit = false, errors = {} }) => {
   return (
     <>
       <div className="baseContainer">
+        <LoginImg className="loginImg" />
         <div className="content">
           <form className="form" onSubmit={handleSubmit} autoComplete="off">
             <ThemeBtn />
