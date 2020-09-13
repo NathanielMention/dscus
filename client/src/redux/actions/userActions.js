@@ -5,34 +5,32 @@ import {
   LOGOUT_USER,
 } from "./actionType";
 
-export function registerUser() {
-  const request = fetch("http://localhost:3000/register").then(
-    (res) => res.data
-  );
+export async function registerUser(dataToSubmit) {
+  const request = await fetch("http://localhost:3000/register", dataToSubmit);
   return {
     type: REGISTER_USER,
-    payload: request,
+    payload: request.data,
   };
 }
 
-export function loginUser() {
-  const request = fetch("http://localhost:3000/login").then((res) => res.data);
+export async function loginUser(dataToSubmit) {
+  const request = await fetch("http://localhost:3000/login", dataToSubmit);
   return {
     type: LOGIN_USER,
     payload: request,
   };
 }
 
-export function authUser() {
-  const request = fetch("http://localhost:3000/auth").then((res) => res.data);
+export async function authUser() {
+  const request = await fetch("http://localhost:3000/auth");
   return {
     type: AUTH_USER,
     payload: request,
   };
 }
 
-export function logoutUser() {
-  const request = fetch("http://localhost:3000/logout").then((res) => res.data);
+export async function logoutUser() {
+  const request = await fetch("http://localhost:3000/logout");
   return {
     type: LOGOUT_USER,
     payload: request,
