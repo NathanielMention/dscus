@@ -18,13 +18,13 @@ const Register = ({ history, errors = {} }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    let dataToSubmit = {
+    let data = {
       username: username,
       password: password,
       confirmPassword: confirmPassword,
     };
 
-    dispatch(registerUser(dataToSubmit)).then((response) => {
+    dispatch(registerUser(data)).then((response) => {
       console.log(response);
       if (response.payload.success) {
         history.push("/login");

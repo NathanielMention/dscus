@@ -17,12 +17,12 @@ const Login = ({ history, errors = {} }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    let dataToSubmit = {
+    let data = {
       username: username,
       password: password,
     };
 
-    dispatch(loginUser(dataToSubmit)).then((response) => {
+    dispatch(loginUser(data)).then((response) => {
       if (response.payload.success) {
         history.push("/");
       } else {
