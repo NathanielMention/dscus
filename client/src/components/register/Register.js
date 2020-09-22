@@ -28,8 +28,6 @@ const Register = ({ history, errors = {} }) => {
       console.log(response);
       if (response.payload.success) {
         history.push("/login");
-      } else {
-        alert(response.payload.err.errmsg);
       }
     });
   }

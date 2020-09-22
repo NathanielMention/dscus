@@ -25,8 +25,6 @@ const Login = ({ history, errors = {} }) => {
     dispatch(loginUser(data)).then((response) => {
       if (response.payload.success) {
         history.push("/");
-      } else {
-        alert(response.payload.err.errmsg);
       }
     });
   }

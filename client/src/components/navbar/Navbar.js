@@ -1,7 +1,6 @@
 import React from "react";
 import ThemeBtn from "../common/ThemeBtn";
 import "../../../styles/Navbar.scss";
-import SearchImg from "../../../public/icons/search.svg";
 
 const dummyData = ["Jake", "Nate", "Jay", "Mel", "Joe", "Tia", "Mia"];
 
@@ -22,7 +21,7 @@ const Navbar = () => {
       <div className="logo">Dscus</div>
       <input
         type="text"
-        placeholder={<SearchImg></SearchImg>}
+        placeholder="Search"
         value={searchTerm}
         onChange={handleChange}
         className="formCenter"
