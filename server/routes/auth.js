@@ -126,11 +126,7 @@ router.post(
         );
       }),
   ],
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
-    failureFlash: true,
-  }),
+  passport.authenticate("local"),
   (req, res) => {
     //errors from login validation
     const loginErrors = validationResult(req);

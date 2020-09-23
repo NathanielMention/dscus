@@ -8,7 +8,7 @@ function initialize(passport) {
   const authenticateUser = (username, password, done) => {
     //search for user in database
     pool.query(
-      `SELECT * FROM users WHERE username = $1`,
+      `SELECT * FROM user_table WHERE username = $1`,
       [username],
       (err, results) => {
         if (err) {
@@ -52,13 +52,17 @@ function initialize(passport) {
   // In deserializeUser that key is matched with the in memory array / database or any data resource.
   // The fetched object is attached to the request object as req.user
   passport.deserializeUser((id, done) => {
-    pool.query(`SELECT * FROM users WHERE id = $1`, [id], (err, results) => {
-      if (err) {
-        return done(err);
+    pool.query(
+      `SELECT * FROM user_table WHERE id = $1`,
+      [id],
+      (err, results) => {
+        if (err) {
+          return done(err);
+        }
+        console.log(`ID is ${results.rows[0].id}`);
+        return done(null, results.rows[0]);
       }
-      console.log(`ID is ${results.rows[0].id}`);
-      return done(null, results.rows[0]);
-    });
+    );
   });
 }
 
