@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import TextInput from "../common/TextInput";
-import ThemeBtn from "../common/ThemeBtn";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../redux/actions/userActions";
 import "../../../styles/Register.scss";
 import "../../../styles/ThemeBtn.scss";
 import RegisterImg from "../../../public/icons/register.svg";
+import Wrapper from "../common/Wrapper";
+import { useTheme } from "../themeBtn/ThemeContext";
 
 //react function component to register user
 const Register = ({ history, errors = {} }) => {
@@ -32,55 +33,71 @@ const Register = ({ history, errors = {} }) => {
     });
   }
 
+  const themeState = useTheme();
+
   return (
     <>
-      <div className="baseContainer">
-        <RegisterImg className="registerImg" />
-        <div className="content">
-          <form className="form" onSubmit={handleSubmit} autoComplete="off">
-            <ThemeBtn />
-            <h2 className="header">Sign Up</h2>
-            {errors.onSubmit && (
-              <div className="alerts" role="alert">
-                {errors.onSubmit}
+      <Wrapper>
+        <div className="baseContainer">
+          <RegisterImg className="registerImg" />
+          <div className="content">
+            <form className="form" onSubmit={handleSubmit} autoComplete="off">
+              <div className="toggle-container">
+                <span style={{ color: "slateblue" }}>☾</span>
+                <span className="toggle">
+                  <input
+                    onChange={() => themeState.toggle()}
+                    id="checkbox"
+                    className="checkbox"
+                    type="checkbox"
+                  />
+                  <label htmlFor="checkbox" />
+                </span>
+                <span style={{ color: "yellow" }}>☀︎</span>
               </div>
-            )}
-            <TextInput
-              name="username"
-              label="Username"
-              placeholder="Enter Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              error={errors.username}
-            />
+              <h2 className="header">Sign Up</h2>
+              {errors.onSubmit && (
+                <div className="alerts" role="alert">
+                  {errors.onSubmit}
+                </div>
+              )}
+              <TextInput
+                name="username"
+                label="Username"
+                placeholder="Enter Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                error={errors.username}
+              />
 
-            <TextInput
-              name="passwprd"
-              label="Password"
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              error={errors.password}
-            />
+              <TextInput
+                name="passwprd"
+                label="Password"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                error={errors.password}
+              />
 
-            <TextInput
-              name="confirmPassword"
-              label="Confirm Password"
-              placeholder="Confirm password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              error={errors.confirmPassword}
-            />
+              <TextInput
+                name="confirmPassword"
+                label="Confirm Password"
+                placeholder="Confirm password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                error={errors.confirmPassword}
+              />
 
-            <button onClick={handleSubmit} type="submit" className="btn">
-              Sign Up
-            </button>
-            <Link className="footer" to={"/login"}>
-              Already Have An Account?
-            </Link>
-          </form>
+              <button onClick={handleSubmit} type="submit" className="btn">
+                Sign Up
+              </button>
+              <Link className="footer" to={"/login"}>
+                Already Have An Account?
+              </Link>
+            </form>
+          </div>
         </div>
-      </div>
+      </Wrapper>
     </>
   );
 };

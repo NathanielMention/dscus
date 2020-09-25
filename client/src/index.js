@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
 import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "./components/themeBtn/ThemeContext";
 
 import Reducer from "./redux/reducers/index";
 import { Provider } from "react-redux";
@@ -20,7 +21,9 @@ ReactDOM.render(
     )}
   >
     <BrowserRouter>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")
