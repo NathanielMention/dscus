@@ -6,37 +6,35 @@ import {
 } from "./actionType";
 
 export async function registerUser(data) {
-  const request = await fetch(
-    "http://localhost:5000/register",
-    {
+  try {
+    const response = await fetch("http://localhost:5000/register", {
       body: JSON.stringify(data),
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-    },
-    data
-  );
-  return {
-    type: REGISTER_USER,
-    payload: request.data,
-  };
+    });
+    const responseData = await response.json();
+
+    return {
+      type: REGISTER_USER,
+      payload: responseData,
+    };
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function loginUser(data) {
-  const request = await fetch(
-    "http://localhost:5000/login",
-    {
-      body: JSON.stringify(data),
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+  const request = await fetch("http://localhost:5000/login", {
+    body: JSON.stringify(data),
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
-    data
-  );
+  });
   return {
     type: LOGIN_USER,
     payload: request,

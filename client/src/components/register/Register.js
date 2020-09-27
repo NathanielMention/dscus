@@ -11,10 +11,11 @@ import Wrapper from "../common/Wrapper";
 import { useTheme } from "../themeBtn/ThemeContext";
 
 //react function component to register user
-const Register = ({ history, errors = {} }) => {
+const Register = ({ history }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
 
   function handleSubmit(e) {
@@ -26,9 +27,11 @@ const Register = ({ history, errors = {} }) => {
     };
 
     dispatch(registerUser(data)).then((response) => {
-      console.log(response);
       if (response.payload.success) {
         history.push("/login");
+      }
+      if (response.payload.errors) {
+        setErrors(response.payload.errors);
       }
     });
   }
@@ -103,7 +106,6 @@ const Register = ({ history, errors = {} }) => {
 };
 
 Register.propTypes = {
-  errors: PropTypes.object,
   history: PropTypes.object.isRequired,
 };
 
