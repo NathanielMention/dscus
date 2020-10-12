@@ -27,18 +27,23 @@ export async function registerUser(data) {
 }
 
 export async function loginUser(data) {
-  const request = await fetch("http://localhost:5000/login", {
-    body: JSON.stringify(data),
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
-  return {
-    type: LOGIN_USER,
-    payload: request,
-  };
+  try {
+    const response = await fetch("http://localhost:5000/login", {
+      body: JSON.stringify(data),
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    const responseData = await response.json();
+    return {
+      type: LOGIN_USER,
+      payload: responseData,
+    };
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function authUser() {

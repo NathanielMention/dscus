@@ -37,6 +37,7 @@ const Register = ({ history }) => {
   }
 
   const themeState = useTheme();
+  console.log(errors);
 
   return (
     <>

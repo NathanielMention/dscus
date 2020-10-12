@@ -17,24 +17,7 @@ router.post(
       .withMessage("Username must be at least 3 characters")
       .trim()
       .isAlphanumeric()
-      .withMessage("Username must have letters or numbers and no spaces")
-      .custom((value, { req }) => {
-        // Search for existing user in the database
-        pool.query(
-          `SELECT * FROM users_table
-              WHERE username = $1`,
-          [username],
-          (err, results) => {
-            if (err) {
-              console.log(err);
-            }
-            if (results.rows.length > 0) {
-              return Promise.reject("Username already exists");
-            }
-            return true;
-          }
-        );
-      }),
+      .withMessage("Username must have letters or numbers and no spaces"),
     check("password")
       .not()
       .isEmpty()
@@ -64,7 +47,7 @@ router.post(
     const hashedPassword = await bcrypt.hash(password, 10);
     // Place the new user into the database
     pool.query(
-      `INSERT INTO users_table (username, password, avatar)
+      `INSERT INTO user_table (username, password, avatar)
             VALUES ($1, $2, $3)
             RETURNING id, password`,
       [username, hashedPassword, avatar],
@@ -84,47 +67,8 @@ router.post(
   "/login",
   [
     //server side login validation
-    check("username")
-      .not()
-      .isEmpty()
-      .withMessage("Username is required")
-      .custom((value, { req }) => {
-        // Search for existing user in the database
-        pool.query(
-          `SELECT * FROM users_table
-                WHERE username = $1`,
-          [username],
-          (err, results) => {
-            if (err) {
-              console.log(err);
-            }
-            if (!results) {
-              return Promise.reject("Username does not exists");
-            }
-            return true;
-          }
-        );
-      }),
-    check("password")
-      .not()
-      .isEmpty()
-      .withMessage("Password is required")
-      .custom((value, { req }) => {
-        pool.query(
-          `SELECT * FROM users_table
-                  WHERE password = $1`,
-          [password],
-          (err, results) => {
-            if (err) {
-              console.log(err);
-            }
-            if (results.rows[0] != value) {
-              return Promise.reject("Password is incorrect");
-            }
-            return true;
-          }
-        );
-      }),
+    check("username").not().isEmpty().withMessage("Username is required"),
+    check("password").not().isEmpty().withMessage("Password is required"),
   ],
   passport.authenticate("local"),
   (req, res) => {
