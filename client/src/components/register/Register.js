@@ -15,7 +15,7 @@ const Register = ({ history }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
 
   function handleSubmit(e) {
@@ -60,18 +60,15 @@ const Register = ({ history }) => {
                 <span style={{ color: "yellow" }}>☀︎</span>
               </div>
               <h2 className="header">Sign Up</h2>
-              {errors.onSubmit && (
-                <div className="alerts" role="alert">
-                  {errors.onSubmit}
-                </div>
-              )}
+              {errors.map((error) => (
+                <div key={error.msg}>{error.msg}</div>
+              ))}
               <TextInput
                 name="username"
                 label="Username"
                 placeholder="Enter Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                error={errors.username}
               />
 
               <TextInput
@@ -80,7 +77,6 @@ const Register = ({ history }) => {
                 placeholder="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                error={errors.password}
               />
 
               <TextInput
@@ -89,7 +85,6 @@ const Register = ({ history }) => {
                 placeholder="Confirm password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                error={errors.confirmPassword}
               />
 
               <button onClick={handleSubmit} type="submit" className="btn">

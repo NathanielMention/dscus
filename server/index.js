@@ -55,16 +55,16 @@ var storage = multer.diskStorage({
   // }
 });
 
-const upload = multer({ storage: storage }).single("file");
+// const upload = multer({ storage: storage }).single("file");
 
-app.post("/api/chat/uploadfiles", auth, (req, res) => {
-  upload(req, res, (err) => {
-    if (err) {
-      return res.json({ success: false, err });
-    }
-    return res.json({ success: true, url: res.req.file.path });
-  });
-});
+// app.post("/api/chat/uploadfiles", auth, (req, res) => {
+//   upload(req, res, (err) => {
+//     if (err) {
+//       return res.json({ success: false, err });
+//     }
+//     return res.json({ success: true, url: res.req.file.path });
+//   });
+// });
 
 io.on("connection", (socket) => {
   socket.on("Input Chat Message", (msg) => {
