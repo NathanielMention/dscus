@@ -71,11 +71,11 @@ router.post(
     check("password").not().isEmpty().withMessage("Password is required"),
   ],
   passport.authenticate("local"),
-  (req, res) => {
+  async (req, res) => {
     //errors from login validation
     const loginErrors = validationResult(req);
     if (!loginErrors.isEmpty()) {
-      return res.status(422).json({ loginErrors: loginErrors.array() });
+      return res.status(422).json({ errors: loginErrors.array() });
     } else {
       res.json({ success: true });
     }

@@ -1,9 +1,4 @@
-import {
-  LOGIN_USER,
-  REGISTER_USER,
-  AUTH_USER,
-  LOGOUT_USER,
-} from "./actionType";
+import { LOGIN_USER, REGISTER_USER, LOGOUT_USER } from "./actionType";
 
 export async function registerUser(data) {
   try {
@@ -37,21 +32,21 @@ export async function loginUser(data) {
       },
     });
     const responseData = await response.json();
-    return {
-      type: LOGIN_USER,
-      payload: responseData,
-    };
+
+    if (response.status === 400 || response.status === 401) {
+      return {
+        type: LOGIN_USER,
+        payload: { responseData },
+      };
+    } else {
+      return {
+        type: LOGIN_USER,
+        payload: responseData,
+      };
+    }
   } catch (error) {
     console.log(error);
   }
-}
-
-export async function authUser() {
-  const request = await fetch("http://localhost:5000/auth");
-  return {
-    type: AUTH_USER,
-    payload: request,
-  };
 }
 
 export async function logoutUser() {

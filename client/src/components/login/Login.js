@@ -11,9 +11,10 @@ import { useTheme } from "../themeBtn/ThemeContext";
 import Wrapper from "../common/Wrapper";
 
 //react function component to Login user
-const Login = ({ history, errors = {} }) => {
+const Login = ({ history }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState([]);
   const dispatch = useDispatch();
 
   function handleSubmit(e) {
@@ -26,6 +27,9 @@ const Login = ({ history, errors = {} }) => {
     dispatch(loginUser(data)).then((response) => {
       if (response.payload.success) {
         history.push("/");
+      }
+      if (response.payload.errors) {
+        setErrors(response.payload.errors);
       }
     });
   }
@@ -51,11 +55,9 @@ const Login = ({ history, errors = {} }) => {
                 <span style={{ color: "yellow" }}>☀︎</span>
               </div>
               <h2 className="header">Login</h2>
-              {errors.onSubmit && (
-                <div className="alerts" role="alert">
-                  {errors.onSubmit}
-                </div>
-              )}
+              {errors.map((error) => (
+                <div key={error.msg}>{error.msg}</div>
+              ))}
               <TextInput
                 className="formGroup"
                 name="username"
@@ -63,7 +65,6 @@ const Login = ({ history, errors = {} }) => {
                 placeholder="Enter Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                error={errors.username}
               />
 
               <TextInput
@@ -73,7 +74,6 @@ const Login = ({ history, errors = {} }) => {
                 placeholder="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                error={errors.password}
               />
 
               <button onClick={handleSubmit} type="submit" className="btn">
@@ -92,7 +92,6 @@ const Login = ({ history, errors = {} }) => {
 };
 
 Login.propTypes = {
-  errors: PropTypes.object,
   history: PropTypes.object.isRequired,
 };
 
