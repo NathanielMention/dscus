@@ -14,7 +14,7 @@ import Wrapper from "../common/Wrapper";
 const Login = ({ history }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState(false);
   const dispatch = useDispatch();
 
   function handleSubmit(e) {
@@ -30,6 +30,9 @@ const Login = ({ history }) => {
       }
       if (response.payload.errors) {
         setErrors(response.payload.errors);
+      }
+      if (response.payload.status === "unauth") {
+        setErrors(true);
       }
     });
   }
@@ -55,9 +58,7 @@ const Login = ({ history }) => {
                 <span style={{ color: "yellow" }}>☀︎</span>
               </div>
               <h2 className="header">Login</h2>
-              {errors.map((error) => (
-                <div key={error.msg}>{error.msg}</div>
-              ))}
+              {errors && <div>The username or Password is wrong</div>}
               <TextInput
                 className="formGroup"
                 name="username"

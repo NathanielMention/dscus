@@ -31,14 +31,14 @@ export async function loginUser(data) {
         "Content-Type": "application/json",
       },
     });
-    const responseData = await response.json();
 
     if (response.status === 400 || response.status === 401) {
       return {
         type: LOGIN_USER,
-        payload: { responseData },
+        payload: { status: "unauth" },
       };
     } else {
+      const responseData = await response.json();
       return {
         type: LOGIN_USER,
         payload: responseData,
