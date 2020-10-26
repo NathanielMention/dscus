@@ -67,29 +67,27 @@ var storage = multer.diskStorage({
 // });
 
 io.on("connection", (socket) => {
-  socket.on("Input Chat Message", (msg) => {
-    connect.then((db) => {
-      try {
-        let chat = new Chat({
-          message: msg.chatMessage,
-          sender: msg.userId,
-          type: msg.type,
-        });
+  console.log("a user connected");
 
-        chat.save((err, doc) => {
-          console.log(doc);
-          if (err) return res.json({ success: false, err });
+  socket.on("disconnect", (reason) => {
+    console.log("user disconnected");
+  });
 
-          Chat.find({ _id: doc._id })
-            .populate("sender")
-            .exec((err, doc) => {
-              return io.emit("Output Chat Message", doc);
-            });
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    });
+  socket.on("room", (data) => {
+    console.log("room join");
+    console.log(data);
+    socket.join(data.room);
+  });
+
+  socket.on("leave room", (data) => {
+    console.log("leaving room");
+    console.log(data);
+    socket.leave(data.room);
+  });
+
+  socket.on("new message", (data) => {
+    console.log(data.room);
+    socket.broadcast.to(data.room).emit("receive message", data);
   });
 });
 
