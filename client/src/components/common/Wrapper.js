@@ -8,6 +8,9 @@ const Wrapper = styled("div")`
   h1 {
     color: ${(props) => props.theme.body};
   }
+  p {
+    color: ${(props) => props.theme.body};
+  }
 `;
 
 export default Wrapper;

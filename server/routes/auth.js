@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { pool } = require("../config/dbConfig");
-const { body, check, validationResult } = require("express-validator");
+const { check, validationResult } = require("express-validator");
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 
@@ -41,7 +41,9 @@ router.post(
       return res.status(422).json({ errors: errors.array() });
     }
     // Validation passed
-    const { username, password, avatar } = req.body;
+    const { username, password } = req.body;
+    const avatar =
+      "https://res.cloudinary.com/dscus/image/upload/v1595713066/defaultavatar.svg";
 
     // Hash password and store into database
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -81,6 +83,15 @@ router.post(
     }
   }
 );
+
+router.get("/", (req, res) => {
+  const data = req.query.q;
+  console.log(data);
+  console.log(results);
+  pool.query(`select * from user_table where username ~ ${data}`, (results) => {
+    res.json({ results });
+  });
+});
 
 router.get("/logout", (req, res) => {
   req.logout();

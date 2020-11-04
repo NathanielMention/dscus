@@ -5,7 +5,7 @@ import Wrapper from "../common/Wrapper";
 import "../../../styles/Chat.scss";
 
 const io = require("socket.io-client");
-const socket = io("http://localhost:5000");
+const socket = io("http://localhost:5001");
 
 function Chat() {
   const [inRoom, setInRoom] = useState(false);

@@ -1,20 +1,29 @@
 import React from "react";
 import "../../../styles/Navbar.scss";
+import "../../../styles/Modal.scss";
+import Modal from "../modal/Modal";
 import { useTheme } from "../themeBtn/ThemeContext";
-
-const dummyData = ["Jake", "Nate", "Jay", "Mel", "Joe", "Tia", "Mia"];
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
+  const [users, setUsers] = React.useState([]);
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
   };
   let results = [];
   if (searchTerm.length > 0)
-    results = dummyData.filter((person) =>
+    results = users.filter((person) =>
       person.toLowerCase().includes(searchTerm)
     );
   const themeState = useTheme();
+  fetch(`http://localhost:5000?q=${searchTerm}`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
   return (
     <nav className="navbar">
       <div className="logo">Dscus</div>
@@ -48,7 +57,7 @@ const Navbar = () => {
         </span>
         <span style={{ color: "yellow" }}>☀︎</span>
       </div>
-      <div className="navProfile">avi</div>
+      <Modal></Modal>
     </nav>
   );
 };
