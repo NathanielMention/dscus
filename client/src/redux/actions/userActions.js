@@ -50,15 +50,27 @@ export async function loginUser(data) {
 }
 
 export async function logoutUser() {
-  const request = await fetch("http://localhost:5000/logout", {
-    method: "DELETE",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
-  return {
-    type: LOGOUT_USER,
-    payload: request,
-  };
+  try {
+    const response = await fetch("http://localhost:5000/logout", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.status === 200) {
+      return {
+        type: LOGOUT_USER,
+        payload: { success: true },
+      };
+    } else {
+      const responseData = await response.json();
+      return {
+        type: LOGOUT_USER,
+        payload: responseData,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }

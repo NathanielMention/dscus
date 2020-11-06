@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/actions/userActions";
 
 const Modal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   function handleSubmit() {
     dispatch(logoutUser()).then((response) => {
@@ -16,7 +18,9 @@ const Modal = () => {
 
   return (
     <div>
-      <button onClick={() => setIsModalOpen(true)}>MODAL</button>
+      <button onClick={() => setIsModalOpen(true)} className="imgCrop">
+        <img className="profilePic"></img>
+      </button>
 
       {isModalOpen && (
         <div className="overlay">
