@@ -84,12 +84,11 @@ router.post(
   }
 );
 
-router.get("/", (req, res) => {
+router.get("/search", (req, res) => {
   const data = req.query.q;
   console.log(data);
-  console.log(results);
-  pool.query(`select * from user_table where username ~ ${data}`, (results) => {
-    res.json({ results });
+  pool.query(`select * from user_table where username ~ ${data}`, () => {
+    res.json({});
   });
 });
 

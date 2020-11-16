@@ -9,6 +9,15 @@ const Navbar = () => {
   const [users, setUsers] = React.useState([]);
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
+    fetch(`http://localhost:5000/search?q=${e.target.value}`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    //fetch results then setusers
   };
   let results = [];
   if (searchTerm.length > 0)
@@ -16,14 +25,6 @@ const Navbar = () => {
       person.toLowerCase().includes(searchTerm)
     );
   const themeState = useTheme();
-  fetch(`http://localhost:5000?q=${searchTerm}`, {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
   return (
     <nav className="navbar">
       <div className="logo">Dscus</div>
