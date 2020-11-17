@@ -7,23 +7,21 @@ import { useTheme } from "../themeBtn/ThemeContext";
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [users, setUsers] = React.useState([]);
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     setSearchTerm(e.target.value);
-    fetch(`http://localhost:5000/search?q=${e.target.value}`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    //fetch results then setusers
-  };
-  let results = [];
-  if (searchTerm.length > 0)
-    results = users.filter((person) =>
-      person.toLowerCase().includes(searchTerm)
+    const response = await fetch(
+      `http://localhost:5000/search?q=${e.target.value}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
     );
+    const parseResponse = await response.json();
+    setUsers(parseResponse);
+  };
   const themeState = useTheme();
   return (
     <nav className="navbar">
@@ -37,12 +35,11 @@ const Navbar = () => {
           className="formCenter"
         />
         <ul className="searchList">
-          {results.length > 0 &&
-            results.map((person, index) => (
-              <li className="searchItems" key={index}>
-                {person}
-              </li>
-            ))}
+          {users.map((user, index) => (
+            <li className="searchItems" key={index}>
+              {user.username}
+            </li>
+          ))}
         </ul>
       </div>
       <div className="toggle-container">

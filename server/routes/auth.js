@@ -84,12 +84,17 @@ router.post(
   }
 );
 
-router.get("/search", (req, res) => {
-  const data = req.query.q;
-  console.log(data);
-  pool.query(`select * from user_table where username ~ ${data}`, () => {
-    res.json({});
-  });
+router.get("/search", async (req, res) => {
+  try {
+    const data = req.query.q;
+    const users = await pool.query(
+      `SELECT * FROM user_table WHERE username ILIKE $1`,
+      [`%${data}%`]
+    );
+    res.json(users.rows);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 router.get("/logout", (req, res) => {
