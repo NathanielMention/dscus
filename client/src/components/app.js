@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./home/Home";
 import Login from "./login/Login";
 import Register from "./register/Register";
+import Profile from "./profile/Profile";
 import PageNotFound from "./PageNotFound";
 
 function App() {
@@ -12,8 +13,9 @@ function App() {
     <div>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
+        <Route exact path="/profile" component={Profile} />
+        <Route exact path="/login" component={Login} />
+        <Route exacr path="/register" component={Register} />
         <Route component={PageNotFound} />
       </Switch>
     </div>
