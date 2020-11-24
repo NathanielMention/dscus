@@ -1,4 +1,4 @@
-import { LOGIN_USER, REGISTER_USER, LOGOUT_USER } from "./actionType";
+import { LOGIN_USER, REGISTER_USER, LOGOUT_USER, SET_USER } from "./actionType";
 
 export async function registerUser(data) {
   try {
@@ -67,6 +67,32 @@ export async function logoutUser() {
       const responseData = await response.json();
       return {
         type: LOGOUT_USER,
+        payload: responseData,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function setUser() {
+  try {
+    const response = await fetch("http://localhost:5000/", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.status === 200) {
+      return {
+        type: SET_USER,
+        payload: { success: true },
+      };
+    } else {
+      const responseData = await response.json();
+      return {
+        type: SET_USER,
         payload: responseData,
       };
     }

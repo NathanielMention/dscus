@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import "../../../styles/Navbar.scss";
 import "../../../styles/Profile.scss";
 import { useTheme } from "../themeBtn/ThemeContext";
@@ -8,10 +8,7 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [users, setUsers] = React.useState([]);
   const [isRedirecting, setIsRedirecting] = React.useState(false);
-  const history = useHistory();
-  if (isRedirecting) {
-    history.push("/profile");
-  }
+
   const handleChange = async (e) => {
     setSearchTerm(e.target.value);
 
@@ -34,6 +31,7 @@ const Navbar = () => {
     }
   };
   const themeState = useTheme();
+  if (isRedirecting) return <Redirect to="/profile" />;
   return (
     <nav className="navbar">
       <div className="logo">Dscus</div>

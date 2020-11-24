@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/actions/userActions";
-//use effect for avi
+
 const Profile = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -31,7 +31,7 @@ const Profile = () => {
               </button>
             </span>
           </p>
-          <button onClick={history.push("/")}>X</button>
+          <button onClick={() => history.push("/")}>Home</button>
         </div>
       </div>
     </div>
