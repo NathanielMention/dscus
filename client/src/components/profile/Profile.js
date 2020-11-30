@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/actions/userActions";
+import "../../../styles/Profile.scss";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,9 @@ const Profile = () => {
               </button>
             </span>
           </p>
-          <button onClick={() => history.push("/")}>Home</button>
+          <button className="btn" onClick={() => history.push("/")}>
+            Home
+          </button>
         </div>
       </div>
     </div>
