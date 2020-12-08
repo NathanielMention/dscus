@@ -97,6 +97,10 @@ router.get("/search", async (req, res) => {
   }
 });
 
+router.get("/", (req, res) => {
+  res.sendStatus(200);
+});
+
 router.get("/profile", (req, res) => {
   res.sendStatus(200);
 });

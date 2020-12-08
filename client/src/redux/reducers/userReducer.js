@@ -2,7 +2,7 @@ import {
   LOGIN_USER,
   REGISTER_USER,
   LOGOUT_USER,
-  SET_USER,
+  GET_USER,
 } from "../actions/actionType";
 
 export default function (state = {}, action) {
@@ -13,8 +13,8 @@ export default function (state = {}, action) {
       return { ...state, loginSuccess: action.payload };
     case LOGOUT_USER:
       return { ...state };
-    case SET_USER:
-      return { ...state, setSuccess: action.payload };
+    case GET_USER:
+      return { ...state, user: action.payload };
     default:
       return state;
   }
