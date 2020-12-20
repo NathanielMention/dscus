@@ -58,7 +58,13 @@ router.post(
           throw err;
         } else {
           console.log(results.rows);
-          res.json({ success: true });
+          req.login(results.rows[0], (err) => {
+            if (err) {
+              res.status(500).json({ message: "Session save went bad." });
+              return;
+            }
+            res.status(200).json({ errors: false, user: results.rows[0] });
+          });
         }
       }
     );
@@ -97,8 +103,14 @@ router.get("/search", async (req, res) => {
   }
 });
 
-router.get("/", (req, res) => {
-  res.sendStatus(200);
+router.get("/", async (req, res) => {
+  console.log(req.user, "jggfchg");
+  try {
+    const users = await pool.query(`SELECT * FROM user_table`);
+    res.json(users);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 router.get("/profile", (req, res) => {

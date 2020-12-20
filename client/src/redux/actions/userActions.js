@@ -9,6 +9,7 @@ export async function registerUser(data) {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
     const responseData = await response.json();
 
@@ -30,6 +31,7 @@ export async function loginUser(data) {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
 
     if (response.status === 400 || response.status === 401) {
@@ -57,6 +59,7 @@ export async function logoutUser() {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
     if (response.status === 200) {
       return {
@@ -83,6 +86,7 @@ export async function getUser() {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
 
     const responseData = await response.json();

@@ -7,10 +7,12 @@ const session = require("express-session");
 const cors = require("cors");
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
+const pgSession = require("connect-pg-simple")(session);
+const { connectionString } = require("./config/dbConfig");
 
 const initializePassport = require("./middleware/passportConfig");
 initializePassport.initialize(passport);
-app.use(cors());
+app.use(cors({ credentials: true, origin: true }));
 
 // Parses data from form
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -18,11 +20,14 @@ app.use(bodyParser.json());
 
 app.use(
   session({
+    store: new pgSession({
+      conString: connectionString,
+    }),
     // Key we want to keep secret which will encrypt all of our information
     secret: process.env.SESSION_SECRET,
     // Should we resave our session variables if nothing has changes which we dont
     resave: false,
-    // Save empty value if there is no vaue which we do not want to do
+    // Save empty value if there is no value which we do not want to do
     saveUninitialized: false,
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
   })
