@@ -57,13 +57,12 @@ router.post(
         if (err) {
           throw err;
         } else {
-          console.log(results.rows);
           req.login(results.rows[0], (err) => {
             if (err) {
               res.status(500).json({ message: "Session save went bad." });
               return;
             }
-            res.status(200).json({ errors: false, user: results.rows[0] });
+            res.json({ success: true, user: results.rows[0] });
           });
         }
       }
@@ -104,10 +103,13 @@ router.get("/search", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  console.log(req.user, "jggfchg");
   try {
-    const users = await pool.query(`SELECT * FROM user_table`);
-    res.json(users);
+    const user = {
+      id: req.user.username,
+      username: req.user.username,
+      avatar: req.user.avatar,
+    };
+    res.json(user);
   } catch (err) {
     console.log(err);
   }

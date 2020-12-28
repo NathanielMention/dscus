@@ -90,7 +90,6 @@ export async function getUser() {
     });
 
     const responseData = await response.json();
-    console.log(responseData);
     return {
       type: GET_USER,
       payload: responseData,
