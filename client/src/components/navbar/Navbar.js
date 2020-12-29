@@ -3,11 +3,14 @@ import { Redirect } from "react-router-dom";
 import "../../../styles/Navbar.scss";
 import "../../../styles/Profile.scss";
 import { useTheme } from "../themeBtn/ThemeContext";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [users, setUsers] = React.useState([]);
   const [isRedirecting, setIsRedirecting] = React.useState(false);
+
+  const user = useSelector((state) => state.user);
 
   const handleChange = async (e) => {
     setSearchTerm(e.target.value);
@@ -66,7 +69,7 @@ const Navbar = () => {
         <span style={{ color: "yellow" }}>☀︎</span>
       </div>
       <button onClick={() => setIsRedirecting(true)} className="imgCrop">
-        <img className="profilePic"></img>
+        <img className="profilePic" src={user.user ? user.user.avatar : ""} />
       </button>
     </nav>
   );
