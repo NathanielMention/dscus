@@ -42,7 +42,7 @@ const Navbar = () => {
       <div className="liWrapper">
         <input
           type="text"
-          placeholder="Search"
+          placeholder="Search Users"
           value={searchTerm}
           onChange={handleChange}
           className="formCenter"

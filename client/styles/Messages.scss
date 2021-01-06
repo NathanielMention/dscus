@@ -1,0 +1,23 @@
+.submitBtn {
+  background-color: #16d2aa;
+  color: #f6f6f6;
+  font-size: 12px;
+  padding: 8px 50px;
+  font-weight: 600;
+  text-transform: uppercase;
+  height: 3rem;
+  width: 2rem;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  border-radius: 20px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+  &:hover {
+    background-color: #00af89;
+  }
+  &:focus {
+    outline: none;
+  }
+}
