@@ -8,6 +8,7 @@ const cors = require("cors");
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 const pgSession = require("connect-pg-simple")(session);
+const { pool } = require("./config/dbConfig");
 const { connectionString } = require("./config/dbConfig");
 
 const initializePassport = require("./middleware/passportConfig");
@@ -92,7 +93,25 @@ io.on("connection", (socket) => {
 
   socket.on("new message", (data) => {
     console.log(data.room);
-    socket.broadcast.to(data.room).emit("receive message", data);
+    //put data in db here
+    const message = data.message;
+    try {
+      pool.query(
+        `INSERT INTO chat_table (message)
+              VALUES ($1)
+              RETURNING id, message`,
+        [message],
+        (err) => {
+          if (err) {
+            throw err;
+          } else {
+            socket.broadcast.to(data.room).emit("receive message", data);
+          }
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
   });
 });
 
