@@ -105,7 +105,7 @@ router.get("/search", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const user = {
-      id: req.user.username,
+      id: req.user.id,
       username: req.user.username,
       avatar: req.user.avatar,
     };

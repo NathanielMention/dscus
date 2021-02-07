@@ -95,12 +95,13 @@ io.on("connection", (socket) => {
     console.log(data.room);
     //put data in db here
     const message = data.message;
+    const userId = data.userId;
     try {
       pool.query(
-        `INSERT INTO chat_table (message)
-              VALUES ($1)
-              RETURNING id, message`,
-        [message],
+        `INSERT INTO chat_table (message, userid)
+              VALUES ($1, $2)
+              RETURNING id, message, userid`,
+        [message, userId],
         (err) => {
           if (err) {
             throw err;
