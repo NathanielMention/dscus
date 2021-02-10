@@ -106,7 +106,7 @@ io.on("connection", (socket) => {
           if (err) {
             throw err;
           } else {
-            socket.broadcast.to(data.room).emit("receive message", data);
+            io.in("test-room").emit("receive message", data);
           }
         }
       );

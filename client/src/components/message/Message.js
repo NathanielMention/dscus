@@ -14,13 +14,14 @@ function Messages(props) {
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    socket.on("receive message", () => {
+    console.log("received new message");
+    socket.on("receive message", (data) => {
+      console.log(data);
+      console.log("ferferf");
+      const message = data.message;
+      const avatar = user.avatar;
       setMessageCount(messageCount + 1);
     });
-  });
-
-  useEffect(() => {
-    console.log("received new message");
     document.title = `${messageCount} new messages have been emitted`;
   }, [messageCount]); //only re-run the effect if new message comes in
 
