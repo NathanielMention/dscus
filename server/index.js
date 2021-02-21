@@ -6,11 +6,10 @@ const passport = require("passport");
 const session = require("express-session");
 const cors = require("cors");
 const server = require("http").createServer(app);
-const io = require("socket.io")(server);
+const io = require("socket.io")(server, { pingTimeout: 60000 });
 const pgSession = require("connect-pg-simple")(session);
 const { pool } = require("./config/dbConfig");
 const { connectionString } = require("./config/dbConfig");
-
 const initializePassport = require("./middleware/passportConfig");
 initializePassport.initialize(passport);
 app.use(cors({ credentials: true, origin: true }));
@@ -73,11 +72,7 @@ var storage = multer.diskStorage({
 // });
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
-
-  socket.on("disconnect", (reason) => {
-    console.log("user disconnected");
-  });
+  socket.on("disconnect", (reason) => {});
 
   socket.on("room", (data) => {
     console.log("room join");
@@ -87,12 +82,10 @@ io.on("connection", (socket) => {
 
   socket.on("leave room", (data) => {
     console.log("leaving room");
-    console.log(data);
     socket.leave(data.room);
   });
 
   socket.on("new message", (data) => {
-    console.log(data.room);
     //put data in db here
     const message = data.message;
     const userId = data.userId;

@@ -10,7 +10,7 @@ function Chat() {
   useEffect(() => {
     if (inRoom) {
       console.log("joining room");
-      socket.emit("join room", { room: "test-room" });
+      socket.emit("room", { room: "test-room" });
     }
 
     return () => {
