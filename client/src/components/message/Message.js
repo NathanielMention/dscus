@@ -4,9 +4,7 @@ import TextInput from "../common/TextInput";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import "../../../styles/Messages.scss";
-
-const io = require("socket.io-client");
-const socket = io("http://localhost:5001");
+import socket from "../../../../server/config/socketConfig";
 
 function Messages(props) {
   const [messageCount, setMessageCount] = useState(0);
@@ -18,7 +16,9 @@ function Messages(props) {
       console.log(data);
       console.log("recieve new message");
       const message = data.message;
-      const avatar = user.avatar;
+      const avatar = data.avatar;
+      const nowTime = data.nowTime;
+      const userName = data.userName;
       setMessageCount(messageCount + 1);
     });
   }); //only re-run the effect if new message comes in
@@ -33,7 +33,7 @@ function Messages(props) {
       nowTime,
       room: "test-room",
     });
-
+    setMessage("");
     setMessageCount(messageCount + 1);
   };
 

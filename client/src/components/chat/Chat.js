@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Messages from "../message/Message";
-
-const io = require("socket.io-client");
-const socket = io("http://localhost:5001");
+import socket from "../../../../server/config/socketConfig";
 
 function Chat() {
   const [inRoom, setInRoom] = useState(false);
