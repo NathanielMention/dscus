@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Messages from "../message/Message";
-import socket from "../../../../server/config/socketConfig";
+import socket from "../../../config/socketConfig";
 
 function Chat() {
   const [inRoom, setInRoom] = useState(false);

@@ -4,7 +4,7 @@ import TextInput from "../common/TextInput";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import "../../../styles/Messages.scss";
-import socket from "../../../../server/config/socketConfig";
+import socket from "../../../config/socketConfig";
 
 function Messages(props) {
   const [messageCount, setMessageCount] = useState(0);
@@ -19,6 +19,7 @@ function Messages(props) {
       const avatar = data.avatar;
       const nowTime = data.nowTime;
       const userName = data.userName;
+      setMessage(message);
       setMessageCount(messageCount + 1);
     });
   }); //only re-run the effect if new message comes in
