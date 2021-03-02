@@ -41,42 +41,11 @@ app.use(passport.session());
 //routes
 app.use("/", require("./routes/auth"));
 
-const multer = require("multer");
-const fs = require("fs");
-
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, `${Date.now()}_${file.originalname}`);
-  },
-  // fileFilter: (req, file, cb) => {
-  //   const ext = path.extname(file.originalname)
-  //   if (ext !== '.jpg' && ext !== '.png' && ext !== '.mp4') {
-  //     return cb(res.status(400).end('only jpg, png, mp4 is allowed'), false);
-  //   }
-  //   cb(null, true)
-  // }
-});
-
-// const upload = multer({ storage: storage }).single("file");
-
-// app.post("/api/chat/uploadfiles", auth, (req, res) => {
-//   upload(req, res, (err) => {
-//     if (err) {
-//       return res.json({ success: false, err });
-//     }
-//     return res.json({ success: true, url: res.req.file.path });
-//   });
-// });
-
 io.on("connection", (socket) => {
   socket.on("disconnect", (reason) => {});
 
   socket.on("room", (data) => {
     console.log("room join");
-    console.log(data);
     socket.join(data.room);
   });
 
@@ -110,10 +79,6 @@ io.on("connection", (socket) => {
 });
 
 server.listen(5001);
-
-//use this to show the image you have in node js server to client (react js)
-//https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
-app.use("/uploads", express.static("uploads"));
 
 const port = process.env.PORT || 5000;
 
