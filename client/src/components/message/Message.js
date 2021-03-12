@@ -1,39 +1,37 @@
 import React, { useState, useEffect } from "react";
 import Logo from "../../../public/icons/send.svg";
 import TextInput from "../common/TextInput";
-import moment from "moment";
-import { useSelector } from "react-redux";
+import Moment from "react-moment";
+import { useSelector, useDispatch } from "react-redux";
 import "../../../styles/Messages.scss";
 import socket from "../../../config/socketConfig";
 import { Comment, Tooltip, Avatar } from "antd";
+import { getChat } from "../../redux/actions/chatActions";
 
 function Messages(props) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const dateToFormat = new Date();
   const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getChat());
     socket.on("receive message", (data) => {
       console.log(data);
-      const message = data.message;
-      const avatar = data.avatar;
-      const nowTime = data.nowTime;
-      const userName = data.userName;
-      const newMessages = [...messages];
-      newMessages.push(message);
-      console.log(newMessages);
+      const message = data;
+      const newMessages = [...messages, { message }];
       setMessages(newMessages);
+      dispatch(postMessage(data));
     });
-  }, []);
+  }, [messages]);
 
   const handleNewMessage = () => {
-    const nowTime = moment();
     socket.emit("new message", {
       message,
       avatar: user.avatar,
       userId: user.id,
       userName: user.username,
-      nowTime,
       room: "test-room",
     });
     setMessage("");
@@ -49,39 +47,25 @@ function Messages(props) {
         <>
           <div style={{ width: "100%" }}>
             <Comment
-              author={""}
-              avatar={<Avatar src={"avatar"} alt={"userName"} />}
+              author={messages.userName}
+              avatar={<Avatar src={message.avatar} alt={message.userName} />}
               content={
-                message.substring(0, 8) === "uploads/" ? (
-                  // this will be either video or image
-
-                  message.substring(message.length - 3, message.length) ===
-                  "mp4" ? (
-                    <video
-                      style={{ maxWidth: "200px" }}
-                      src={`http://localhost:5000/${message}`}
-                      alt="video"
-                      type="video/mp4"
-                      controls
-                    />
-                  ) : (
-                    <img
-                      style={{ maxWidth: "200px" }}
-                      src={`http://localhost:5000/${message}`}
-                      alt="img"
-                    />
-                  )
-                ) : (
-                  <div>
-                    {messages.map((message) => (
-                      <p key={message}>{message}</p>
-                    ))}
-                  </div>
-                )
+                <div>
+                  {messages.map((index) => (
+                    <p key={index}>{message}</p>
+                  ))}
+                </div>
               }
               datetime={
-                <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
-                  <span>{moment().fromNow()}</span>
+                <Tooltip>
+                  <Moment
+                    date={dateToFormat}
+                    format="YYYY-MM-DD HH:mm"
+                    parse="YYYY-MM-DD HH:mm"
+                    interval={60000}
+                  >
+                    {dateToFormat}
+                  </Moment>
                 </Tooltip>
               }
             />
